@@ -56,7 +56,7 @@ func Migrations(db *gorm.DB) error {
 				return db.Migrator().AutoMigrate(&model.PostPassphrases{})
 			},
 			Rollback: func(tx *gorm.DB) error {
-				return db.Migrator().DropTable("posts_passphrases")
+				return db.Migrator().DropTable("post_passphrases")
 			},
 		},
 	})
