@@ -3,11 +3,11 @@ package main
 import (
 	"os"
 
+	"errors"
+	"fmt"
 	"github.com/eniehack/nikkiamev2/internal/config"
 	"github.com/eniehack/nikkiamev2/internal/migrations"
 	"github.com/urfave/cli/v2"
-	"errors"
-	"fmt"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func main() {
 			Value:       "../../config.toml",
 			Usage:       "specify config file",
 			Destination: &configFilePath,
-			EnvVars:      []string{"NIKKIAME_CONFIG"},
+			EnvVars:     []string{"NIKKIAME_CONFIG"},
 		},
 	}
 	app.Action = func(ctx *cli.Context) error {

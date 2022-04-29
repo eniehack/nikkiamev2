@@ -6,11 +6,11 @@ import (
 
 	"flag"
 
+	"github.com/eniehack/nikkiamev2/internal/config"
 	"github.com/eniehack/nikkiamev2/internal/handler"
 	"github.com/eniehack/nikkiamev2/internal/validation"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/eniehack/nikkiamev2/internal/config"
 	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/sessions"
 )
@@ -55,4 +55,3 @@ func main() {
 
 	http.ListenAndServe(":3000", r)
 }
-

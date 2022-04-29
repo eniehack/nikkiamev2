@@ -1,9 +1,9 @@
 package migrations
 
 import (
+	"github.com/eniehack/nikkiamev2/internal/model"
 	"github.com/go-gormigrate/gormigrate/v2"
 	"gorm.io/gorm"
-	"github.com/eniehack/nikkiamev2/internal/model"
 )
 
 func Migrations(db *gorm.DB) error {
