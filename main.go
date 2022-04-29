@@ -6,9 +6,13 @@ import (
 
 	"flag"
 
+	"github.com/eniehack/nikkiamev2/internal/handler"
+	"github.com/eniehack/nikkiamev2/internal/validation"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/eniehack/nikkiamev2/internal/config"
+	"github.com/go-playground/validator/v10"
+	"github.com/gorilla/sessions"
 )
 
 func main() {
@@ -26,6 +30,18 @@ func main() {
 		log.Fatalf("failed to connect database: %s", err)
 	}
 
+	v := validator.New()
+	v.RegisterValidation("user_id", validation.UserIDValidator)
+
+	store := sessions.NewCookieStore([]byte(configData.Session.Secret))
+
+	h := &handler.Handler{
+		DB: db,
+		Validator: v,
+		SessionStore: store,
+		Config: configData,
+	}
+
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
@@ -33,6 +49,9 @@ func main() {
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("hello"))
 	})
+	r.Get("/signin", h.SigninIndex)
+	r.Post("/signin", h.Signin)
+	r.Get("/@{userid}/feed.xml", h.UserFeed)
 
 	http.ListenAndServe(":3000", r)
 }

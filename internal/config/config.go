@@ -20,8 +20,13 @@ type DatabaseConfig struct {
 	DSN    string `toml:"dsn"`
 }
 
+type SessionConfig struct {
+	Secret string `toml:"secret"`
+}
+
 type Config struct {
 	DB DatabaseConfig `toml:"database"`
+	Session SessionConfig `toml:"session"`
 }
 
 func LoadConfigFile(filepath string) (*Config, error) {
